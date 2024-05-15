@@ -1,0 +1,75 @@
+.signup-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.form-full-width {
+  width: 100%;
+}
+
+.form-container {
+  padding: 15px;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.card-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f4f9;
+}
+
+mat-card {
+  width: 840px;
+  border-radius: 25px
+}
+
+form {
+  float: inline-end;
+}
+
+.mat-mdc-card-content {
+  padding: 30px 10px 40px i !important;
+}
+
+.btn-radius {
+  border-radius: 20px;
+  float: right;
+  padding: 20px 25px;
+}
+
+.google-icon {
+  background-image: url('../../../assets/signupIcon/googleIcon.png');
+  background-size: cover;
+}
+
+.text-form-div {
+  display: flex;
+  margin-top: 20px;
+}
+
+.form-flex {
+  flex: auto;
+}
+
+.h1-style {
+  font-weight: 400;
+  float: left;
+  margin: 0;
+  font-family: "Google Sans", "Noto Sans Myanmar UI", arial, sans-serif;
+}
+
+.span-style {
+  float: left;
+  margin-top: 16px;
+}
+
+.text-style {
+  display: grid;
+}
