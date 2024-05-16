@@ -1,0 +1,19 @@
+<div class="form-flex" *ngIf=signupForm>
+  <form [formGroup]="signupForm" class="signup-form">
+    <mat-form-field class="form-full-width">
+      <mat-label>First Name</mat-label>
+      <input matInput formControlName="dateOfBirth" autocomplete="off">
+      <mat-error>
+        Enter a name
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field class="form-full-width">
+      <mat-label>Surname</mat-label>
+      <input matInput formControlName="gender" autocomplete="off">
+      <mat-error>
+        Are you sure you want to continue without surname?
+      </mat-error>
+    </mat-form-field>
+    <button mat-flat-button color="primary" type="submit" class="btn-radius" (click)="goToUseExistingEmail()">Next</button>
+  </form>
+</div>

@@ -1,0 +1,26 @@
+<div class="card-container">
+  <mat-card>
+    <mat-card-content>
+      <div class="form-container">
+        <div mat-card-avatar class="google-icon"></div>
+        <div class="text-form-div">
+          <div>
+            <div class="text-style">
+              <div>
+                <h1 class="h1-style">{{mainHeader1}}</h1>
+              </div>
+              <div>
+                <h1 class="h1-style">{{mainHeader2}}</h1>
+              </div>
+              <div>
+                <span class="span-style">{{subTitle}}</span>
+              </div>
+            </div>
+          </div>
+          <app-signup-name *ngIf="signupType === 'name'" [signupForm]="signupForm" (emitMainHeader)="getData($event)"></app-signup-name>
+          <app-signup-basic-info *ngIf="signupType === 'basicInfo'" [signupForm]="signupForm" (emitMainHeader)="getData($event)"></app-signup-basic-info>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

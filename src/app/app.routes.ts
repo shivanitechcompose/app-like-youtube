@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import { SignupComponent } from './signup-signin/signup/signup.component';
+import { UserSignupSigninComponent } from './shared/components/user-signup-signin/user-signup-signin.component';
 
 export const routes: Routes = [
-  { path: '', component: SignupComponent },
+  { path: '', component: UserSignupSigninComponent },
 ];
