@@ -1,0 +1,12 @@
+<div class="form-flex" *ngIf=signupForm>
+  <form [formGroup]="signupForm" class="signup-form">
+    <mat-form-field class="form-full-width">
+      <mat-label>Email address</mat-label>
+      <input matInput formControlName="email" autocomplete="off">
+      <mat-error *ngIf="signupForm.get('email')?.hasError('required')">
+        Enter an email address
+      </mat-error>
+    </mat-form-field>
+    <button mat-flat-button color="primary" type="submit" class="btn-radius" (click)="goToNext()">Next</button>
+  </form>
+</div>

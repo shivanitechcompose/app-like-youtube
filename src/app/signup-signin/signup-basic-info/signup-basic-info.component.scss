@@ -1,0 +1,31 @@
+.signup-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.form-full-width {
+  width: 100%;
+}
+
+.form-brd-width {
+  padding-left: 20px;
+}
+
+form {
+  float: inline-end;
+}
+
+.btn-radius {
+  border-radius: 20px;
+  float: right;
+  padding: 20px 25px;
+}
+
+.form-flex {
+  flex: auto;
+}
+
+.brd-dropdown {
+  display: flex;
+}

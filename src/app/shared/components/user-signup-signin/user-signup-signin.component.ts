@@ -7,10 +7,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { Router } from '@angular/router';
-import { SignupNameComponent } from '../../../signup-signin/signup-signin-common/signup-name/signup-name.component';
-import { SignupBasicInfoComponent } from '../../../signup-signin/signup-signin-common/signup-basic-info/signup-basic-info/signup-basic-info.component';
-
-
+import { SignupNameComponent } from '../../../signup-signin/signup-name/signup-name.component';
+import { SignupBasicInfoComponent } from '../../../signup-signin/signup-basic-info/signup-basic-info.component';
+import { SignupExistingEmailComponent } from '../../../signup-signin/signup-existing-email/signup-existing-email.component';
 @Component({
   selector: 'app-user-signup-signin',
   standalone: true,
@@ -21,7 +20,8 @@ import { SignupBasicInfoComponent } from '../../../signup-signin/signup-signin-c
     MatCheckboxModule,
     MatCardModule,
     SignupNameComponent,
-    SignupBasicInfoComponent],
+    SignupBasicInfoComponent,
+    SignupExistingEmailComponent],
   templateUrl: './user-signup-signin.component.html',
   styleUrl: './user-signup-signin.component.scss'
 })
@@ -42,7 +42,9 @@ export class UserSignupSigninComponent implements OnInit {
     this.signupForm = this.fb.group({
       firstName: ['', [Validators.required]],
       surname: ['', [Validators.required]],
-      dateOfBirth: ['', [Validators.required]],
+      dateOfBirthDay: ['', [Validators.required]],
+      dateOfBirthMonth: ['', [Validators.required]],
+      dateOfBirthYear: ['', [Validators.required]],
       gender: ['', [Validators.required]],
       email: ['', [Validators.required]]
     });

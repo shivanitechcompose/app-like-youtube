@@ -19,6 +19,7 @@
           </div>
           <app-signup-name *ngIf="signupType === 'name'" [signupForm]="signupForm" (emitMainHeader)="getData($event)"></app-signup-name>
           <app-signup-basic-info *ngIf="signupType === 'basicInfo'" [signupForm]="signupForm" (emitMainHeader)="getData($event)"></app-signup-basic-info>
+          <app-signup-existing-email *ngIf="signupType === 'existingEmail'" [signupForm]="signupForm" (emitMainHeader)="getData($event)"></app-signup-existing-email>
         </div>
       </div>
     </mat-card-content>
