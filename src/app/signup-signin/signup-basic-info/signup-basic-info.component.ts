@@ -39,6 +39,12 @@ export class SignupBasicInfoComponent implements OnInit {
     'Costomised'
   ];
 
+  referGender: string[] = [
+    'Female',
+    'Male',
+    'Other'
+  ];
+
   months: string[] = [
     'January',
     'February',
@@ -55,6 +61,7 @@ export class SignupBasicInfoComponent implements OnInit {
   ];
 
   dateOfBirthIncomplete: boolean = false;
+  customisedGender: boolean = false;
 
 
   ngOnInit(): void {
@@ -70,14 +77,17 @@ export class SignupBasicInfoComponent implements OnInit {
     const month = this.signupForm.get('dateOfBirthMonth')?.value;
     const year = this.signupForm.get('dateOfBirthYear')?.value;
 
-    if (!day || !month || !year) {
+    if (!day || !month || !year || this.signupForm.get('dateOfBirthDay')?.hasError('pattern')
+     || this.signupForm.get('dateOfBirthYear')?.hasError('pattern')) {
       this.dateOfBirthIncomplete = true;
     }
 
-    if (this.signupForm?.value?.dateOfBirthDay !== '' &&
-    this.signupForm?.value?.dateOfBirthMonth !== '' &&
-    this.signupForm?.value?.dateOfBirthYear !== '' &&
-    this.signupForm?.value?.gender !== '') {
+    if (
+      !this.signupForm.get('dateOfBirthDay')?.hasError('required') &&
+      !this.signupForm.get('dateOfBirthMonth')?.hasError('required') &&
+      !this.signupForm.get('dateOfBirthYear')?.hasError('required') &&
+      !this.signupForm.get('dateOfBirthYear')?.hasError('pattern')
+    ) {
       const userData = {
         signupType: 'existingEmail',
         mainHeader1: 'Use your existing email',
@@ -89,15 +99,22 @@ export class SignupBasicInfoComponent implements OnInit {
     }
   }
 
-
   checkValues(): void {
     this.dateOfBirthIncomplete = false;
     const day = this.signupForm.get('dateOfBirthDay')?.value;
     const month = this.signupForm.get('dateOfBirthMonth')?.value;
     const year = this.signupForm.get('dateOfBirthYear')?.value;
 
-    if (!day || !month || !year) {
+    if (!day || !month || !year || this.signupForm.get('dateOfBirthDay')?.hasError('pattern')
+    || this.signupForm.get('dateOfBirthYear')?.hasError('pattern')) {
       this.dateOfBirthIncomplete = true;
+    }
+  }
+
+  checkGender(event: any) {
+    console.log("hey", event, 'form:',this.signupForm.get('gender')?.value)
+    if(event.value === 'Costomised') {
+      this.customisedGender = true;
     }
   }
 }

@@ -2,24 +2,28 @@
   <mat-card>
     <mat-card-content>
       <div class="form-container">
-        <div mat-card-avatar class="google-icon"></div>
+        <div class="google-padding">
+          <div mat-card-avatar class="google-icon"></div>
+        </div>
         <div class="text-form-div">
-          <div>
+          <div class="left-div">
             <div class="text-style">
               <div>
-                <h1 class="h1-style">{{mainHeader1}}</h1>
+                <h1 class="h1-style">{{mainHeader1}}  </h1>
               </div>
               <div>
-                <h1 class="h1-style">{{mainHeader2}}</h1>
+                <h1 class="h1-style">{{mainHeader2}}  </h1>
               </div>
               <div>
                 <span class="span-style">{{subTitle}}</span>
               </div>
             </div>
           </div>
-          <app-signup-name *ngIf="signupType === 'name'" [signupForm]="signupForm" (emitMainHeader)="getData($event)"></app-signup-name>
-          <app-signup-basic-info *ngIf="signupType === 'basicInfo'" [signupForm]="signupForm" (emitMainHeader)="getData($event)"></app-signup-basic-info>
-          <app-signup-existing-email *ngIf="signupType === 'existingEmail'" [signupForm]="signupForm" (emitMainHeader)="getData($event)"></app-signup-existing-email>
+          <div class="right-div">
+            <app-signup-name *ngIf="signupType === 'name'" [signupForm]="signupForm" (emitMainHeader)="getData($event)"></app-signup-name>
+            <app-signup-basic-info *ngIf="signupType === 'basicInfo'" [signupForm]="signupForm" (emitMainHeader)="getData($event)"></app-signup-basic-info>
+            <app-signup-existing-email *ngIf="signupType === 'existingEmail'" [signupForm]="signupForm" (emitMainHeader)="getData($event)"></app-signup-existing-email>
+          </div>
         </div>
       </div>
     </mat-card-content>

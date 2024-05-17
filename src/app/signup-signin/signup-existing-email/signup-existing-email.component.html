@@ -6,7 +6,10 @@
       <mat-error *ngIf="signupForm.get('email')?.hasError('required')">
         Enter an email address
       </mat-error>
+      <mat-hint>You’ll need to confirm that this email belongs to you</mat-hint>
     </mat-form-field>
-    <button mat-flat-button color="primary" type="submit" class="btn-radius" (click)="goToNext()">Next</button>
+    <div class="button-next">
+      <button mat-flat-button color="primary" type="submit" class="btn-radius" (click)="goToNext()">Next</button>
+    </div>
   </form>
 </div>

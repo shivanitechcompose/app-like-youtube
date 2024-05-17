@@ -41,11 +41,12 @@ export class UserSignupSigninComponent implements OnInit {
   ngOnInit(): void {
     this.signupForm = this.fb.group({
       firstName: ['', [Validators.required]],
-      surname: ['', [Validators.required]],
-      dateOfBirthDay: ['', [Validators.required]],
+      surname: [''],
+      dateOfBirthDay: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
       dateOfBirthMonth: ['', [Validators.required]],
-      dateOfBirthYear: ['', [Validators.required]],
+      dateOfBirthYear: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
       gender: ['', [Validators.required]],
+      referGender: ['', [Validators.required]],
       email: ['', [Validators.required]]
     });
     console.log('signuppp:', this.signupForm)

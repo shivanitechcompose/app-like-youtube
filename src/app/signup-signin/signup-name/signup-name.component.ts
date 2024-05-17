@@ -27,6 +27,7 @@ export class SignupNameComponent implements OnInit {
   @Input() public signupForm : FormGroup = this.fb.group({})
 
   @Output() public emitMainHeader: EventEmitter<Object> = new EventEmitter();
+  nameIncomplete: boolean = false;
   
   constructor(private fb: FormBuilder, private router: Router) {}
 
@@ -39,7 +40,13 @@ export class SignupNameComponent implements OnInit {
   }
 
   public goToBasicInfo(): void {
-    if (this.signupForm?.value?.firstName !== '' &&  this.signupForm?.value?.surname !== '') {
+    const name = this.signupForm.get('firstName')?.value;
+
+    if(!name) {
+      this.nameIncomplete = true;
+    }
+    
+    if (this.signupForm?.value?.firstName !== '') {
       const userData = {
         signupType: 'basicInfo',
         mainHeader1: 'Basic Information',
@@ -48,6 +55,15 @@ export class SignupNameComponent implements OnInit {
 
       this.emitMainHeader.emit(userData);
       console.log("signupForm", this.signupForm?.value);
+    }
+  }
+
+  checkValues(): void {
+    this.nameIncomplete = false;
+    const name = this.signupForm.get('firstName')?.value;
+
+    if(!name) {
+      this.nameIncomplete = true;
     }
   }
 
