@@ -1,7 +1,7 @@
 <div class="form-flex" *ngIf=signupForm>
   <form [formGroup]="signupForm" class="signup-form">
     <div class="brd-dropdown">
-      <mat-form-field class="form-brd-width" maxlenght="2">
+      <mat-form-field class="form-brd-width" maxlength="2">
         <mat-label>Day</mat-label>
         <input matInput formControlName="dateOfBirthDay" maxlength="2" pattern="\d{2}" (keyup)="checkValues()" autocomplete="off">
       </mat-form-field>
@@ -13,7 +13,7 @@
           }
         </mat-select>
       </mat-form-field>
-      <mat-form-field class="form-brd-width" maxlenght="4" minlength="4">
+      <mat-form-field class="form-brd-width" maxlength="4" minlength="4">
         <mat-label>Year</mat-label>
         <input matInput maxlength="4" pattern="\d{4}" formControlName="dateOfBirthYear" (keyup)="checkValues()" autocomplete="off">
       </mat-form-field>
@@ -32,7 +32,7 @@
         </mat-error>
       </mat-form-field>
     </div>
-    <div *ngIf="customisedGender">
+    <!-- <div *ngIf="customisedGender">
       <mat-form-field class="form-full-width">
         <mat-label>What's your gender?</mat-label>
         <input matInput formControlName="firstName" (keyup)="checkValues()" autocomplete="off">
@@ -50,9 +50,12 @@
           </mat-error>
         </mat-form-field>
       </div>
+    </div> -->
+    <div>
+      <a href="https://support.google.com/accounts/answer/1733224?hl=en-GB" target="_blank">Why we ask for birthday and gender?</a>
     </div>
     <div class="button-next">
-      <button mat-flat-button color="primary" type="submit" class="btn-radius" (click)="goToUseExistingEmail()">Next</button>
+      <button mat-flat-button color="primary" type="submit" class="btn-radius" (click)="goToUseCreateEmail()">Next</button>
     </div>
   </form>
 </div>

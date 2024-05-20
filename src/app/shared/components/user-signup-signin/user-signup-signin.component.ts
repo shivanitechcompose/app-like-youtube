@@ -9,7 +9,8 @@ import { MatCardModule } from '@angular/material/card';
 import { Router } from '@angular/router';
 import { SignupNameComponent } from '../../../signup-signin/signup-name/signup-name.component';
 import { SignupBasicInfoComponent } from '../../../signup-signin/signup-basic-info/signup-basic-info.component';
-import { SignupExistingEmailComponent } from '../../../signup-signin/signup-existing-email/signup-existing-email.component';
+import { SignupCreateEmailComponent } from '../../../signup-signin/signup-create-email/signup-create-email.component';
+import { SignupPasswordComponent } from '../../../signup-signin/signup-password/signup-password.component';
 @Component({
   selector: 'app-user-signup-signin',
   standalone: true,
@@ -21,13 +22,14 @@ import { SignupExistingEmailComponent } from '../../../signup-signin/signup-exis
     MatCardModule,
     SignupNameComponent,
     SignupBasicInfoComponent,
-    SignupExistingEmailComponent],
+    SignupCreateEmailComponent,
+    SignupPasswordComponent],
   templateUrl: './user-signup-signin.component.html',
   styleUrl: './user-signup-signin.component.scss'
 })
 export class UserSignupSigninComponent implements OnInit {
 
-  @Output() formSubmit = new EventEmitter<FormGroup>();
+  // @Output() formSubmit = new EventEmitter<FormGroup>();
 
   public mainHeader1: string = 'Create a Google';
   public mainHeader2: string = 'Account';
@@ -35,6 +37,7 @@ export class UserSignupSigninComponent implements OnInit {
   public signupType: string = 'name';
 
   public signupForm: FormGroup = this.fb.group({});
+  emailPattern = '^[a-zA-Z0-9.]+$';
 
   constructor(private fb: FormBuilder, private router: Router) {}
 
@@ -46,8 +49,10 @@ export class UserSignupSigninComponent implements OnInit {
       dateOfBirthMonth: ['', [Validators.required]],
       dateOfBirthYear: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
       gender: ['', [Validators.required]],
-      referGender: ['', [Validators.required]],
-      email: ['', [Validators.required]]
+      // referGender: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      confirmPassword: [''],
     });
     console.log('signuppp:', this.signupForm)
   }
@@ -59,10 +64,11 @@ export class UserSignupSigninComponent implements OnInit {
     this.signupType = event?.signupType;
   }
 
-  onSubmit() {
-    if (this.signupForm.valid) {
-      console.log(this.signupForm.value);
-      this.formSubmit.emit(this.signupForm.value)
-    }
-  }
+  // onSubmit() {
+  //   if (this.signupForm.valid) {
+  //     this.signupForm.value.email = this.signupForm.value.email + '@gmail.com';
+  //     console.log('onsubmit:',this.signupForm.value);
+  //     this.formSubmit.emit(this.signupForm.value)
+  //   }
+  // }
 }

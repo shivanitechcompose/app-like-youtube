@@ -35,15 +35,14 @@ export class SignupBasicInfoComponent implements OnInit {
   availableGender: string[] = [
     'Female',
     'Male',
-    'Rather not say',
-    'Costomised'
-  ];
-
-  referGender: string[] = [
-    'Female',
-    'Male',
     'Other'
   ];
+
+  // referGender: string[] = [
+  //   'Female',
+  //   'Male',
+  //   'Other'
+  // ];
 
   months: string[] = [
     'January',
@@ -63,16 +62,11 @@ export class SignupBasicInfoComponent implements OnInit {
   dateOfBirthIncomplete: boolean = false;
   customisedGender: boolean = false;
 
-
   ngOnInit(): void {
     console.log("signupForm", this.signupForm?.value)
   }
 
-  onFormSubmit(event: any) {
-    console.log('step1:', event);
-  }
-
-  public goToUseExistingEmail(): void {
+  public goToUseCreateEmail(): void {
     const day = this.signupForm.get('dateOfBirthDay')?.value;
     const month = this.signupForm.get('dateOfBirthMonth')?.value;
     const year = this.signupForm.get('dateOfBirthYear')?.value;
@@ -82,16 +76,32 @@ export class SignupBasicInfoComponent implements OnInit {
       this.dateOfBirthIncomplete = true;
     }
 
+    const enteredDate = year + '-' + month + '-' + day;
+    const today = new Date();
+    today.setHours(0,0,0,0);
+    const givenEnteredDate = new Date(enteredDate);
+
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    const isYesterday = givenEnteredDate.getDate() === yesterday.getDate() &&
+    givenEnteredDate.getMonth() === yesterday.getMonth() &&
+    givenEnteredDate.getFullYear() === yesterday.getFullYear();
+
+    if(givenEnteredDate.toDateString() === today.toDateString() || isYesterday) {
+      this.dateOfBirthIncomplete = true;
+    }
+
     if (
       !this.signupForm.get('dateOfBirthDay')?.hasError('required') &&
       !this.signupForm.get('dateOfBirthMonth')?.hasError('required') &&
       !this.signupForm.get('dateOfBirthYear')?.hasError('required') &&
-      !this.signupForm.get('dateOfBirthYear')?.hasError('pattern')
+      !this.signupForm.get('dateOfBirthYear')?.hasError('pattern') &&
+      !this.dateOfBirthIncomplete
     ) {
       const userData = {
-        signupType: 'existingEmail',
-        mainHeader1: 'Use your existing email',
-        subTitle: 'Enter the email address that you want to use for your Google Account'
+        signupType: 'createEmail',
+        mainHeader1: 'How you’ll sign in',
+        subTitle: 'Create a Gmail address for signing in to your Google Account'
       }
 
       this.emitMainHeader.emit(userData);
@@ -113,8 +123,8 @@ export class SignupBasicInfoComponent implements OnInit {
 
   checkGender(event: any) {
     console.log("hey", event, 'form:',this.signupForm.get('gender')?.value)
-    if(event.value === 'Costomised') {
-      this.customisedGender = true;
-    }
+    // if(event.value === 'Costomised') {
+    //   this.customisedGender = true;
+    // }
   }
 }

@@ -1,0 +1,22 @@
+<div class="form-flex" *ngIf=signupForm>
+  <form [formGroup]="signupForm" class="signup-form">
+    <mat-form-field class="form-full-width right-placeholder">
+      <mat-label>Username</mat-label>
+      <input matInput formControlName="email" autocomplete="off">
+      <span matSuffix class="suffix-style">&#64;gmail.com</span>
+      <mat-error *ngIf="signupForm.get('email')?.hasError('required')">
+        Enter a Gmail address
+      </mat-error>
+      <mat-hint>You can use letters, numbers and full stops {{invalidEmail}}</mat-hint>
+      <mat-error *ngIf="signupForm.get('email')?.hasError('pattern')">
+        Sorry, only letters (a-z), numbers (0-9), and periods (.) are allowed.
+      </mat-error>
+      <mat-error *ngIf="invalidEmail">
+        Sorry, your username must be between 6 and 30 characters long.
+      </mat-error>
+    </mat-form-field>
+    <div class="button-next">
+      <button mat-flat-button color="primary" type="submit" class="btn-radius" (click)="goToCreatePassword()">Next</button>
+    </div>
+  </form>
+</div>
