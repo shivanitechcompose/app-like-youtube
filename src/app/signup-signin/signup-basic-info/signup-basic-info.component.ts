@@ -87,7 +87,7 @@ export class SignupBasicInfoComponent implements OnInit {
     givenEnteredDate.getMonth() === yesterday.getMonth() &&
     givenEnteredDate.getFullYear() === yesterday.getFullYear();
 
-    if(givenEnteredDate.toDateString() === today.toDateString() || isYesterday) {
+    if(givenEnteredDate.toDateString() === today.toDateString() || isYesterday || givenEnteredDate > today) {
       this.dateOfBirthIncomplete = true;
     }
 

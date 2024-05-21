@@ -23,53 +23,31 @@ import { CommonModule } from '@angular/common';
   styleUrl: './signup-create-email.component.scss'
 })
 export class SignupCreateEmailComponent {
-
   @Input() public signupForm : FormGroup = this.fb.group({})
-
   @Output() public emitMainHeader: EventEmitter<Object> = new EventEmitter();
-  invalidEmail = false;
-  
+
   constructor(private fb: FormBuilder, private router: Router) {}
 
-  ngOnInit(): void {
-    console.log("signupForm", this.signupForm?.value)
-  }
-
-  onFormSubmit(event: any) {
-    console.log('step1:', event);
-  }
+  ngOnInit(): void {}
 
   public goToCreatePassword(): void {
-    console.log("this.signupForm.value.email.length:", this.signupForm.value.email.length)
-    console.log("this.signupForm.value.email.length:", this.signupForm.value.email.length < 6)
-
-    console.log("this.signupForm.value.email.length:", this.signupForm.value.email.length > 30)
-
-    if(this.signupForm.value.email && this.signupForm.value.email.length < 6 || this.signupForm.value.email.value > 30) {
-      this.invalidEmail = true;
-    }
+    this.signupForm.value.email = this.signupForm.value.email?.includes("@gmail.com") ? this.signupForm.value.email : this.signupForm.value.email + '@gmail.com'; 
     
-    if(!this.invalidEmail) {
-      this.signupForm.value.email = this.signupForm.value.email?.includes("@gmail.com") ? this.signupForm.value.email : this.signupForm.value.email + '@gmail.com'; 
-      console.log("signupForm", this.signupForm?.value);
-    }
+    if (
+      !this.signupForm.get('email')?.hasError('required') &&
+      !this.signupForm.get('email')?.hasError('pattern') &&
+      !this.signupForm.get('email')?.hasError('minlength') &&
+      !this.signupForm.get('email')?.hasError('maxlength')
+    ) {
+      const userData = {
+        signupType: 'password',
+        mainHeader1: 'Create a strong',
+        mainHeader2: 'password',
+        subTitle: 'Create a strong password with a mixture of letters, numbers and symbols'
+      }
 
-      // if (
-      //   !this.signupForm.get('dateOfBirthDay')?.hasError('required') &&
-      //   !this.signupForm.get('dateOfBirthMonth')?.hasError('required') &&
-      //   !this.signupForm.get('dateOfBirthYear')?.hasError('required') &&
-      //   !this.signupForm.get('dateOfBirthYear')?.hasError('pattern') &&
-      //   !this.dateOfBirthIncomplete
-      // ) {
-        const userData = {
-          signupType: 'password',
-          mainHeader1: 'Create a strong',
-          mainHeader2: 'password',
-          subTitle: 'Create a strong password with a mixture of letters, numbers and symbols'
-        }
-  
-        this.emitMainHeader.emit(userData);
-        console.log("signupForm", this.signupForm?.value)
-      // }
+      this.emitMainHeader.emit(userData);
+      console.log("signupForm", this.signupForm?.value)
+    }
   }
 }

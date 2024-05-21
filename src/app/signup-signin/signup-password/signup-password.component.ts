@@ -32,6 +32,7 @@ export class SignupPasswordComponent {
   passwordIncomplete: boolean = false;
   confirmPasswordRequired: boolean = false;
   passwordNotMatched: boolean = false;
+  passwordPatternWrong: boolean = false;
   
   constructor(private fb: FormBuilder, private router: Router) {}
 
@@ -57,7 +58,6 @@ export class SignupPasswordComponent {
     }
 
     const confirmPassword = this.signupForm.get('confirmPassword')?.value;
-
     if(this.signupForm.get('password')?.value && !confirmPassword) {
       this.confirmPasswordRequired = true;
     }
@@ -68,10 +68,16 @@ export class SignupPasswordComponent {
       this.passwordNotMatched = false;
     }
 
-    if(password && confirmPassword && !this.passwordNotMatched && this.signupForm.get('password')?.value && this.signupForm.get('password')?.value?.length < 8) {
+    if(password && confirmPassword && !this.passwordNotMatched && this.signupForm.get('password')?.value?.length < 8) {
       this.passwordIncomplete = true;
     } else {
       this.passwordIncomplete = false;
+    }
+
+    if(password && confirmPassword && !this.passwordNotMatched && !this.passwordIncomplete && this.signupForm.get('password')?.hasError('pattern')) {
+     this.passwordPatternWrong = true;
+    } else {
+      this.passwordPatternWrong = false;
     }
 
     const userData = {

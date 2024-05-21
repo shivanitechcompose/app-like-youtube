@@ -20,10 +20,10 @@
             </div>
           </div>
           <div class="right-div">
-            <!-- <app-signup-name *ngIf="signupType === 'name'" [signupForm]="signupForm" (emitMainHeader)="getData($event)"></app-signup-name> -->
-            <!-- <app-signup-basic-info *ngIf="signupType === 'basicInfo'" [signupForm]="signupForm" (emitMainHeader)="getData($event)"></app-signup-basic-info> -->
-            <app-signup-create-email [signupForm]="signupForm" (emitMainHeader)="getData($event)"></app-signup-create-email>
-            <!-- <app-signup-password *ngIf="signupType === 'password'" [signupForm]="signupForm" (emitMainHeader)="getData($event)"></app-signup-password> -->
+            <app-signup-name *ngIf="signupType === 'name'" [signupForm]="signupForm" (emitMainHeader)="getData($event)"></app-signup-name>
+            <app-signup-basic-info *ngIf="signupType === 'basicInfo'" [signupForm]="signupForm" (emitMainHeader)="getData($event)"></app-signup-basic-info>
+            <app-signup-create-email *ngIf="signupType === 'createEmail'" [signupForm]="signupForm" (emitMainHeader)="getData($event)"></app-signup-create-email>
+            <app-signup-password *ngIf="signupType === 'password'" [signupForm]="signupForm" (emitMainHeader)="getData($event)"></app-signup-password>
           </div>
         </div>
       </div>

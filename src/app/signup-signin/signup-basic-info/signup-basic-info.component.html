@@ -22,7 +22,7 @@
     <div>
       <mat-form-field class="form-full-width">
         <mat-label>Gender</mat-label>
-        <mat-select formControlName="gender" (selectionChange)="checkGender($event)">
+        <mat-select formControlName="gender">
           @for (gender of availableGender; track gender) {
             <mat-option [value]="gender">{{gender}}</mat-option>
           }

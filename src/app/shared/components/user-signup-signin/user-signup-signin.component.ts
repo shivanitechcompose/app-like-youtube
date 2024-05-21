@@ -50,9 +50,9 @@ export class UserSignupSigninComponent implements OnInit {
       dateOfBirthYear: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
       gender: ['', [Validators.required]],
       // referGender: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
-      confirmPassword: [''],
+      email: ['', [Validators.required, Validators.pattern("^[a-zA-Z0-9.]+$"), Validators.minLength(6), Validators.maxLength(30)]],
+      password: ['', [Validators.required, Validators.minLength(8), Validators.pattern('(?=.*[a-z])(?=.*[0-9])(?=.*[$@$!%*?#&])[a-z0-9\d$@$!%*?&].{8,}')]],
+      confirmPassword: ['', [Validators.required]],
     });
     console.log('signuppp:', this.signupForm)
   }
