@@ -6,7 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { Router } from '@angular/router';
-import { UserSignupSigninComponent } from '../../shared/components/user-signup-signin/user-signup-signin.component';
+import { UserSignupComponent } from '../../shared/components/user-signup/user-signup.component';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -18,7 +18,7 @@ import { CommonModule } from '@angular/common';
     MatButtonModule,
     MatCheckboxModule,
     MatCardModule,
-    UserSignupSigninComponent],
+    UserSignupComponent],
   templateUrl: './signup-password.component.html',
   styleUrl: './signup-password.component.scss'
 })
@@ -42,10 +42,6 @@ export class SignupPasswordComponent {
 
   togglePasswordVisibility(): void {
     this.hide = !this.hide;
-  }
-
-  onFormSubmit(event: any) {
-    console.log('step1:', event);
   }
 
   public goToNext(): void {

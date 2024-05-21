@@ -1,0 +1,98 @@
+.form-container {
+  padding: 15px;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.card-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f0f4f9;
+  justify-content: center;
+}
+
+mat-card {
+  width: 1040px;
+  border-radius: 28px;
+  min-height: 384px;
+}
+
+.email-div {
+  cursor: pointer;
+  border: 2px solid #000;
+  border-radius: 100px;
+  height: 41px;
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.left-div {
+  flex-basis: 50%;
+  flex-grow: 1;
+  max-width: 50%;
+}
+
+.right-div {
+  flex-basis: 50%;
+  flex-grow: 1;
+  max-width: 50%;
+}
+
+.google-padding {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.mat-mdc-card-avatar {
+  height: 48px;
+  width: 48px;
+}
+
+.mat-mdc-card-content {
+  padding: 30px 10px 40px i !important;
+}
+
+.google-icon {
+  background-image: url('../../../../assets/signupIcon/googleIcon.png');
+  background-size: cover;
+}
+
+.text-form-div {
+  display: flex;
+  margin-top: 20px;
+}
+
+.h1-style {
+  font-weight: 400;
+  float: left;
+  margin: 0;
+  font-family: sans-serif;
+  line-height: 1.18181818;
+  font-size: 2.75rem;
+}
+
+.span-style {
+  float: left;
+  margin-top: 16px;
+  font-family: sans-serif;
+}
+
+.text-style {
+  display: grid;
+}
+
+.centered-container {
+  display: flex; /* Enables flexbox layout */
+  justify-content: center; /* Centers items horizontally */
+  align-items: center; /* Centers items vertically */
+  text-align: center; /* Centers text within the spans */
+  height: 100vh; 
+}

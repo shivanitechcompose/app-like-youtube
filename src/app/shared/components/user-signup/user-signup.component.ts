@@ -12,7 +12,7 @@ import { SignupBasicInfoComponent } from '../../../signup-signin/signup-basic-in
 import { SignupCreateEmailComponent } from '../../../signup-signin/signup-create-email/signup-create-email.component';
 import { SignupPasswordComponent } from '../../../signup-signin/signup-password/signup-password.component';
 @Component({
-  selector: 'app-user-signup-signin',
+  selector: 'app-user-signup',
   standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule,
     MatFormFieldModule,
@@ -24,10 +24,10 @@ import { SignupPasswordComponent } from '../../../signup-signin/signup-password/
     SignupBasicInfoComponent,
     SignupCreateEmailComponent,
     SignupPasswordComponent],
-  templateUrl: './user-signup-signin.component.html',
-  styleUrl: './user-signup-signin.component.scss'
+  templateUrl: './user-signup.component.html',
+  styleUrl: './user-signup.component.scss'
 })
-export class UserSignupSigninComponent implements OnInit {
+export class UserSignupComponent implements OnInit {
 
   // @Output() formSubmit = new EventEmitter<FormGroup>();
 

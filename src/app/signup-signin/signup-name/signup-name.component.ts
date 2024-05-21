@@ -7,7 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { Router } from '@angular/router';
-import { UserSignupSigninComponent } from '../../shared/components/user-signup-signin/user-signup-signin.component';
+import { UserSignupComponent } from '../../shared/components/user-signup/user-signup.component';
 
 @Component({
   selector: 'app-signup-name',
@@ -18,25 +18,20 @@ import { UserSignupSigninComponent } from '../../shared/components/user-signup-s
     MatButtonModule,
     MatCheckboxModule,
     MatCardModule,
-    UserSignupSigninComponent],
+    UserSignupComponent],
   templateUrl: './signup-name.component.html',
   styleUrl: './signup-name.component.scss'
 })
 export class SignupNameComponent implements OnInit {
-
   @Input() public signupForm : FormGroup = this.fb.group({})
-
   @Output() public emitMainHeader: EventEmitter<Object> = new EventEmitter();
+
   nameIncomplete: boolean = false;
   
   constructor(private fb: FormBuilder, private router: Router) {}
 
   ngOnInit(): void {
     console.log("signupForm", this.signupForm?.value)
-  }
-
-  onFormSubmit(event: any) {
-    console.log('step1:', event);
   }
 
   public goToBasicInfo(): void {

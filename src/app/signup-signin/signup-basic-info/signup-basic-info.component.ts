@@ -8,7 +8,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { UserSignupSigninComponent } from '../../shared/components/user-signup-signin/user-signup-signin.component';
+import { UserSignupComponent } from '../../shared/components/user-signup/user-signup.component';
 
 @Component({
   selector: 'app-signup-basic-info',
@@ -20,14 +20,13 @@ import { UserSignupSigninComponent } from '../../shared/components/user-signup-s
     MatCheckboxModule,
     MatCardModule,
     MatSelectModule,
-    UserSignupSigninComponent],
+    UserSignupComponent],
   templateUrl: './signup-basic-info.component.html',
   styleUrl: './signup-basic-info.component.scss'
 })
 export class SignupBasicInfoComponent implements OnInit {
 
   @Input() public signupForm : FormGroup = this.fb.group({})
-
   @Output() public emitMainHeader: EventEmitter<Object> = new EventEmitter();
 
   constructor(private fb: FormBuilder, private router: Router) {}

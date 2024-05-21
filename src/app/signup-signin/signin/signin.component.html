@@ -1,1 +1,23 @@
-<p>signin works!</p>
+<div class="form-flex" *ngIf=signinForm>
+  <form [formGroup]="signinForm" class="signin-form">
+    <mat-form-field class="form-full-width right-placeholder">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" autocomplete="off">
+      <mat-error *ngIf="signinForm.get('email')?.hasError('required')">
+        Enter an email address
+      </mat-error>
+    </mat-form-field>
+    <div class="learn-more">
+      <span>
+        Not your computer? Use Guest mode to sign in privately.
+      </span>
+      <div>
+        <a href="https://support.google.com/chrome/answer/6130773?hl=en-GB" target="_blank"> Learn more about using Guest mode</a>
+      </div>
+    </div>
+    <div class="button-container">
+      <button mat-raised-button color="primary" type="submit" class="btn-radius" (click)="goToCreateAccount()">Create account</button>
+      <button mat-flat-button color="primary" type="submit" class="btn-radius"  (click)="goToCreatePassword()">Next</button>
+    </div>
+  </form>
+</div>
