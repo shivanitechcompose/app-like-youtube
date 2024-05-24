@@ -1,11 +1,14 @@
 <div class="form-flex" *ngIf=signupForm>
   <form [formGroup]="signupForm" class="signup-form">
     <mat-form-field class="form-full-width right-placeholder">
-      <mat-label>Username</mat-label>
+      <mat-label>Username {{accountAlreadyFound}}</mat-label>
       <input matInput minlength="6" maxlength="30" pattern="^[a-zA-Z0-9.]+$" formControlName="email" autocomplete="off">
       <span matSuffix class="suffix-style">&#64;gmail.com</span>
       <mat-error *ngIf="signupForm.get('email')?.hasError('required')">
         Enter a Gmail address
+      </mat-error>
+      <mat-error *ngIf="accountAlreadyFound">
+        This email has been taken already
       </mat-error>
       <mat-error *ngIf="!signupForm.get('email')?.hasError('pattern') && signupForm.get('email')?.hasError('minlength') || signupForm.get('email')?.hasError('maxlength')">
         Sorry, your username must be between 6 and 30 characters long.

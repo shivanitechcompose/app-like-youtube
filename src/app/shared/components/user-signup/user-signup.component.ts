@@ -11,6 +11,7 @@ import { SignupNameComponent } from '../../../signup-signin/signup-name/signup-n
 import { SignupBasicInfoComponent } from '../../../signup-signin/signup-basic-info/signup-basic-info.component';
 import { SignupCreateEmailComponent } from '../../../signup-signin/signup-create-email/signup-create-email.component';
 import { SignupPasswordComponent } from '../../../signup-signin/signup-password/signup-password.component';
+import { HttpClientModule } from '@angular/common/http';
 @Component({
   selector: 'app-user-signup',
   standalone: true,
@@ -23,7 +24,9 @@ import { SignupPasswordComponent } from '../../../signup-signin/signup-password/
     SignupNameComponent,
     SignupBasicInfoComponent,
     SignupCreateEmailComponent,
-    SignupPasswordComponent],
+    SignupPasswordComponent,
+    HttpClientModule
+  ],
   templateUrl: './user-signup.component.html',
   styleUrl: './user-signup.component.scss'
 })
@@ -45,16 +48,14 @@ export class UserSignupComponent implements OnInit {
     this.signupForm = this.fb.group({
       firstName: ['', [Validators.required]],
       surname: [''],
+      email: ['', [Validators.required, Validators.pattern("^[a-zA-Z0-9.]+$"), Validators.minLength(6), Validators.maxLength(30)]],
+      gender: ['', [Validators.required]],
+      password: ['', [Validators.required, Validators.minLength(8), Validators.pattern('(?=.*[a-z])(?=.*[0-9])(?=.*[$@$!%*?#&])[a-z0-9\d$@$!%*?&].{8,}')]],
+      confirmPassword: ['', [Validators.required]],
       dateOfBirthDay: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
       dateOfBirthMonth: ['', [Validators.required]],
       dateOfBirthYear: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
-      gender: ['', [Validators.required]],
-      // referGender: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.pattern("^[a-zA-Z0-9.]+$"), Validators.minLength(6), Validators.maxLength(30)]],
-      password: ['', [Validators.required, Validators.minLength(8), Validators.pattern('(?=.*[a-z])(?=.*[0-9])(?=.*[$@$!%*?#&])[a-z0-9\d$@$!%*?&].{8,}')]],
-      confirmPassword: ['', [Validators.required]],
     });
-    console.log('signuppp:', this.signupForm)
   }
 
   getData(event: any) {
@@ -63,12 +64,4 @@ export class UserSignupComponent implements OnInit {
     this.subTitle = event?.subTitle;
     this.signupType = event?.signupType;
   }
-
-  // onSubmit() {
-  //   if (this.signupForm.valid) {
-  //     this.signupForm.value.email = this.signupForm.value.email + '@gmail.com';
-  //     console.log('onsubmit:',this.signupForm.value);
-  //     this.formSubmit.emit(this.signupForm.value)
-  //   }
-  // }
 }

@@ -8,6 +8,8 @@ import { MatCardModule } from '@angular/material/card';
 import { Router } from '@angular/router';
 import { UserSignupComponent } from '../../shared/components/user-signup/user-signup.component';
 import { CommonModule } from '@angular/common';
+import { UserSignupSigninService } from '../../shared/services/user-signup-signin.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-signup-password',
@@ -18,7 +20,8 @@ import { CommonModule } from '@angular/common';
     MatButtonModule,
     MatCheckboxModule,
     MatCardModule,
-    UserSignupComponent],
+    UserSignupComponent,
+    HttpClientModule],
   templateUrl: './signup-password.component.html',
   styleUrl: './signup-password.component.scss'
 })
@@ -34,7 +37,7 @@ export class SignupPasswordComponent {
   passwordNotMatched: boolean = false;
   passwordPatternWrong: boolean = false;
   
-  constructor(private fb: FormBuilder, private router: Router) {}
+  constructor(private fb: FormBuilder, private router: Router, private userSignupSigninService: UserSignupSigninService) {}
 
   ngOnInit(): void {
     console.log("signupForm", this.signupForm?.value)
@@ -76,15 +79,36 @@ export class SignupPasswordComponent {
       this.passwordPatternWrong = false;
     }
 
-    const userData = {
-      signupType: 'password',
-      mainHeader1: 'Create a strong',
-      mainHeader2: 'password',
-      subTitle: 'Create a strong password with a mixture of letters, numbers and symbols'
-    }
+    if(!this.passwordIsRequired && !this.confirmPasswordRequired && !this.passwordIncomplete && !this.passwordPatternWrong && !this.passwordNotMatched) {
+      const monthNames = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+      ];
 
-    this.emitMainHeader.emit(userData);
-    console.log("signupForm", this.signupForm?.value)
+      const monthIndex = monthNames.findIndex(
+        month => month.toLowerCase() === this.signupForm?.get('dateOfBirthMonth')?.value?.toLowerCase()
+      );
+      const month = monthIndex + 1;
+      const brdMonth = month < 10 ? '0' + month : month;
+      const birthDate = this.signupForm.get('dateOfBirthYear')?.value + '/' + brdMonth + '/' + this.signupForm.get('dateOfBirthDay')?.value;
+      this.signupForm.value.email = this.signupForm.value.email?.includes("@gmail.com") ? this.signupForm.value.email : this.signupForm.value.email + '@gmail.com'; 
+
+      const validSignupForm = {
+        ...this.signupForm.value,
+        dateOfBirth: birthDate.toString()
+      };
+
+      if (validSignupForm) {
+        this.userSignupSigninService.register(validSignupForm).subscribe(
+          response => {
+            console.log('User registered successfully:', response);
+          },
+          error => {
+            console.error('Registration error:', error);
+          }
+        );
+      }
+    }
   }
 
   checkValues() {
@@ -94,7 +118,6 @@ export class SignupPasswordComponent {
     if(!password) {
       this.passwordIsRequired = true;
     }
-
   }
 
   checkValuesForConfirmPassword(): void {

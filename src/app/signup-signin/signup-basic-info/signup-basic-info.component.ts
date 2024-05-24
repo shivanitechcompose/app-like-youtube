@@ -102,7 +102,6 @@ export class SignupBasicInfoComponent implements OnInit {
         mainHeader1: 'How you’ll sign in',
         subTitle: 'Create a Gmail address for signing in to your Google Account'
       }
-
       this.emitMainHeader.emit(userData);
       console.log("signupForm", this.signupForm?.value)
     }
