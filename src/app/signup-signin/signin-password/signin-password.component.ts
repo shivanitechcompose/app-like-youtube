@@ -8,6 +8,7 @@ import { MatCardModule } from '@angular/material/card';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { UserSigninComponent } from '../../shared/components/user-signin/user-signin.component';
+import { UserSignupSigninService } from '../../shared/services/user-signup-signin.service';
 
 @Component({
   selector: 'app-signin-password',
@@ -33,7 +34,7 @@ export class SigninPasswordComponent {
   passwordNotMatched: boolean = false;
   passwordPatternWrong: boolean = false;
   
-  constructor(private fb: FormBuilder, private router: Router) {}
+  constructor(private fb: FormBuilder, private userSignupSigninService: UserSignupSigninService) {}
 
   ngOnInit(): void {
     console.log("signinForm", this.signinForm?.value)
@@ -51,7 +52,16 @@ export class SigninPasswordComponent {
     if(!password) {
       this.passwordIsRequired = true;
     }
-    console.log("signinForm", this.signinForm?.value)
+    if(!this.passwordIsRequired) {
+      this.userSignupSigninService.login(this.signinForm.value).subscribe(
+        response => {
+          console.log('User registered successfully:', response);
+        },
+        error => {
+          console.error('Registration error:', error);
+        }
+      );
+    }
   }
 
   checkValues() {

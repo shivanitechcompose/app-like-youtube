@@ -7,8 +7,8 @@
       <mat-error *ngIf="signupForm.get('email')?.hasError('required')">
         Enter a Gmail address
       </mat-error>
-      <mat-error *ngIf="accountAlreadyFound">
-        This email has been taken already
+      <mat-error *ngIf="signupForm.get('email')?.hasError('emailTaken')">
+        That username is taken. Try another.
       </mat-error>
       <mat-error *ngIf="!signupForm.get('email')?.hasError('pattern') && signupForm.get('email')?.hasError('minlength') || signupForm.get('email')?.hasError('maxlength')">
         Sorry, your username must be between 6 and 30 characters long.

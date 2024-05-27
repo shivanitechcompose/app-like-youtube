@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -29,37 +29,26 @@ export class SignupCreateEmailComponent {
 
   accountAlreadyFound: boolean = false;
 
-  constructor(private fb: FormBuilder, private router: Router, private userSignupSigninService: UserSignupSigninService) {}
+  constructor(private fb: FormBuilder, private router: Router, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {}
 
   public goToCreatePassword(): void {
-    
     if (
       !this.signupForm.get('email')?.hasError('required') &&
       !this.signupForm.get('email')?.hasError('pattern') &&
       !this.signupForm.get('email')?.hasError('minlength') &&
-      !this.signupForm.get('email')?.hasError('maxlength')
+      !this.signupForm.get('email')?.hasError('maxlength') &&
+      !this.signupForm.get('email')?.hasError('emailTaken')
       ) {
       this.signupForm.value.email = this.signupForm.value.email?.includes("@gmail.com") ? this.signupForm.value.email : this.signupForm.value.email + '@gmail.com'; 
-      this.userSignupSigninService.userEmailPresent(this.signupForm.value.email).subscribe(
-        (response: any) => {
-          if(!response['data']['email_already_exist']) {
-            const userData = {
-              signupType: 'password',
-              mainHeader1: 'Create a strong',
-              mainHeader2: 'password',
-              subTitle: 'Create a strong password with a mixture of letters, numbers and symbols'
-            }
-            this.emitMainHeader.emit(userData);
-          } else {
-            this.accountAlreadyFound = true;
-          }
-        },
-        error => {
-          console.error('User email present error:', error);
-        }
-      );
+        const userData = {
+        signupType: 'password',
+        mainHeader1: 'Create a strong',
+        mainHeader2: 'password',
+        subTitle: 'Create a strong password with a mixture of letters, numbers and symbols'
+      }
+      this.emitMainHeader.emit(userData);
     }
   }
 }

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -12,6 +12,9 @@ import { SignupBasicInfoComponent } from '../../../signup-signin/signup-basic-in
 import { SignupCreateEmailComponent } from '../../../signup-signin/signup-create-email/signup-create-email.component';
 import { SignupPasswordComponent } from '../../../signup-signin/signup-password/signup-password.component';
 import { HttpClientModule } from '@angular/common/http';
+import { catchError, map, Observable, of } from 'rxjs';
+import { UserSignupSigninService } from '../../services/user-signup-signin.service';
+import { EmailExistsValidator } from '../../validators/emailExist.validator';
 @Component({
   selector: 'app-user-signup',
   standalone: true,
@@ -42,13 +45,21 @@ export class UserSignupComponent implements OnInit {
   public signupForm: FormGroup = this.fb.group({});
   emailPattern = '^[a-zA-Z0-9.]+$';
 
-  constructor(private fb: FormBuilder, private router: Router) {}
+  constructor(private fb: FormBuilder, private router: Router, private userSignupSigninService: UserSignupSigninService,
+    private emailExistsValidator: EmailExistsValidator) {}
 
   ngOnInit(): void {
     this.signupForm = this.fb.group({
       firstName: ['', [Validators.required]],
       surname: [''],
-      email: ['', [Validators.required, Validators.pattern("^[a-zA-Z0-9.]+$"), Validators.minLength(6), Validators.maxLength(30)]],
+      email: ['', [
+          Validators.required,
+          Validators.pattern("^[a-zA-Z0-9.]+$"),
+          Validators.minLength(6),
+          Validators.maxLength(30)
+        ],
+        [this.emailExistsValidator.emailTakenValidator()]
+      ],
       gender: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(8), Validators.pattern('(?=.*[a-z])(?=.*[0-9])(?=.*[$@$!%*?#&])[a-z0-9\d$@$!%*?&].{8,}')]],
       confirmPassword: ['', [Validators.required]],

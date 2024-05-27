@@ -90,7 +90,7 @@ export class SignupPasswordComponent {
       );
       const month = monthIndex + 1;
       const brdMonth = month < 10 ? '0' + month : month;
-      const birthDate = this.signupForm.get('dateOfBirthYear')?.value + '/' + brdMonth + '/' + this.signupForm.get('dateOfBirthDay')?.value;
+      const birthDate = this.signupForm.get('dateOfBirthYear')?.value + '-' + brdMonth + '-' + this.signupForm.get('dateOfBirthDay')?.value;
       this.signupForm.value.email = this.signupForm.value.email?.includes("@gmail.com") ? this.signupForm.value.email : this.signupForm.value.email + '@gmail.com'; 
 
       const validSignupForm = {

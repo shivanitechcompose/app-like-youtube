@@ -9,7 +9,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
-import { Router } from '@angular/router';
+import { EmailExistsValidator } from '../../validators/emailExist.validator';
 
 @Component({
   selector: 'app-user-signin',
@@ -33,11 +33,11 @@ export class UserSigninComponent {
 
   public signinForm: FormGroup = this.fb.group({});
 
-  constructor(private fb: FormBuilder, private router: Router) {}
+  constructor(private fb: FormBuilder, private emailExistsValidator: EmailExistsValidator) {}
 
   ngOnInit(): void {
     this.signinForm = this.fb.group({
-      email: ['', [Validators.required]],
+      email: ['', [Validators.required], [this.emailExistsValidator.userNotFoundValidator()]],
       password: ['', [Validators.required]],
     });
     console.log('signin:', this.signinForm)

@@ -35,28 +35,15 @@ export class SigninComponent {
 
   public goToCreatePassword(): void {
     if (
-      !this.signinForm.get('email')?.hasError('required')
+      !this.signinForm.get('email')?.hasError('required') &&
+      !this.signinForm.get('email')?.hasError('userNotFound')
     ) {
-
-      this.userSignupSigninService.userEmailPresent(this.signinForm.get('email')?.value).subscribe(
-        (response: any) => {
-          if(response['data']['email_already_exist']) {
-            const userData = {
-              signinType: 'signinPassword',
-              mainHeader: 'Welcome',
-              enteredEmail: this.signinForm.get('email')?.value
-            }
-      
-            this.emitSigninMainHeader.emit(userData);
-            console.log("signinForm", this.signinForm?.value)
-          } else {
-            this.accountNotFound = true;
-          }
-        },
-        error => {
-          console.error('User email present error:', error);
-        }
-      );
+      const userData = {
+        signinType: 'signinPassword',
+        mainHeader: 'Welcome',
+        enteredEmail: this.signinForm.get('email')?.value
+      }
+      this.emitSigninMainHeader.emit(userData);
     }
   }
 
