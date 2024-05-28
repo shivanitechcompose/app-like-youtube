@@ -34,21 +34,25 @@ export class SignupCreateEmailComponent {
   ngOnInit(): void {}
 
   public goToCreatePassword(): void {
-    if (
-      !this.signupForm.get('email')?.hasError('required') &&
-      !this.signupForm.get('email')?.hasError('pattern') &&
-      !this.signupForm.get('email')?.hasError('minlength') &&
-      !this.signupForm.get('email')?.hasError('maxlength') &&
-      !this.signupForm.get('email')?.hasError('emailTaken')
-      ) {
-      this.signupForm.value.email = this.signupForm.value.email?.includes("@gmail.com") ? this.signupForm.value.email : this.signupForm.value.email + '@gmail.com'; 
-        const userData = {
-        signupType: 'password',
-        mainHeader1: 'Create a strong',
-        mainHeader2: 'password',
-        subTitle: 'Create a strong password with a mixture of letters, numbers and symbols'
-      }
-      this.emitMainHeader.emit(userData);
-    }
+    this.signupForm.value.email = this.signupForm.value.email?.includes('@gmail.com') ? this.signupForm.value.email : this.signupForm.value.email + '@gmail.com';
+    this.cdr.detectChanges();
+      setTimeout(() => {
+      if (
+        !this.signupForm.get('email')?.hasError('required') &&
+        !this.signupForm.get('email')?.hasError('pattern') &&
+        !this.signupForm.get('email')?.hasError('minlength') &&
+        !this.signupForm.get('email')?.hasError('maxlength') &&
+        !this.signupForm.get('email')?.hasError('emailTaken') &&
+        this.signupForm.get('email')?.valid
+        ) {
+          const userData = {
+            signupType: 'password',
+            mainHeader1: 'Create a strong',
+            mainHeader2: 'password',
+            subTitle: 'Create a strong password with a mixture of letters, numbers and symbols'
+          }
+          this.emitMainHeader.emit(userData);
+        }
+      }, 1000);
   }
 }

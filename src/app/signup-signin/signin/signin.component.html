@@ -9,6 +9,9 @@
       <mat-error *ngIf="signinForm.get('email')?.hasError('required')">
         Enter an email address
       </mat-error>
+      <mat-error *ngIf="!signinForm.get('email')?.hasError('required') && signinForm.get('email')?.hasError('email')">
+        Enter a valid email address
+      </mat-error>
       <mat-error *ngIf="signinForm.get('email')?.hasError('userNotFound')">
         Couldn't find your Google Account
       </mat-error>

@@ -37,7 +37,11 @@ export class UserSigninComponent {
 
   ngOnInit(): void {
     this.signinForm = this.fb.group({
-      email: ['', [Validators.required], [this.emailExistsValidator.userNotFoundValidator()]],
+      email: ['', {
+        validators: [Validators.required, Validators.email],
+        asyncValidators: [this.emailExistsValidator.userNotFoundValidator()],
+        updateOn: 'blur'
+      }],
       password: ['', [Validators.required]],
     });
     console.log('signin:', this.signinForm)
