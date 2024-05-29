@@ -37,92 +37,46 @@ export class SignupBasicInfoComponent implements OnInit {
     'Other'
   ];
 
-  // referGender: string[] = [
-  //   'Female',
-  //   'Male',
-  //   'Other'
-  // ];
-
-  months: string[] = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December"
+  months = [
+    { value: 0, viewValue: 'January' },
+    { value: 1, viewValue: 'February' },
+    { value: 2, viewValue: 'March' },
+    { value: 3, viewValue: 'April' },
+    { value: 4, viewValue: 'May' },
+    { value: 5, viewValue: 'June' },
+    { value: 6, viewValue: 'July' },
+    { value: 7, viewValue: 'August' },
+    { value: 8, viewValue: 'September' },
+    { value: 9, viewValue: 'October' },
+    { value: 10, viewValue: 'November' },
+    { value: 11, viewValue: 'December' },
   ];
-
-  dateOfBirthIncomplete: boolean = false;
-  customisedGender: boolean = false;
 
   ngOnInit(): void {
     console.log("signupForm", this.signupForm?.value)
   }
 
   public goToUseCreateEmail(): void {
-    const day = this.signupForm.get('dateOfBirthDay')?.value;
-    const month = this.signupForm.get('dateOfBirthMonth')?.value;
-    const year = this.signupForm.get('dateOfBirthYear')?.value;
 
-    if (!day || !month || !year || this.signupForm.get('dateOfBirthDay')?.hasError('pattern')
-     || this.signupForm.get('dateOfBirthYear')?.hasError('pattern')) {
-      this.dateOfBirthIncomplete = true;
-    }
+    if(this.signupForm.get('dateOfBirthDay')?.valid &&
+      this.signupForm.get('dateOfBirthMonth')?.valid &&
+      this.signupForm.get('dateOfBirthYear')?.valid) {
 
-    const enteredDate = year + '-' + month + '-' + day;
-    const today = new Date();
-    today.setHours(0,0,0,0);
-    const givenEnteredDate = new Date(enteredDate);
+      const month = this.signupForm.get('dateOfBirthMonth')?.value + 1;
+      const dob = this.signupForm.get('dateOfBirthYear')?.value + '-' + month + '-' + this.signupForm.get('dateOfBirthDay')?.value;
 
-    const yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-    const isYesterday = givenEnteredDate.getDate() === yesterday.getDate() &&
-    givenEnteredDate.getMonth() === yesterday.getMonth() &&
-    givenEnteredDate.getFullYear() === yesterday.getFullYear();
+      this.signupForm.patchValue({
+        dateOfBirthMonth: month,
+        dateOfBirth: dob
+     });
 
-    if(givenEnteredDate.toDateString() === today.toDateString() || isYesterday || givenEnteredDate > today) {
-      this.dateOfBirthIncomplete = true;
-    }
-
-    if (
-      !this.signupForm.get('dateOfBirthDay')?.hasError('required') &&
-      !this.signupForm.get('dateOfBirthMonth')?.hasError('required') &&
-      !this.signupForm.get('dateOfBirthYear')?.hasError('required') &&
-      !this.signupForm.get('dateOfBirthYear')?.hasError('pattern') &&
-      !this.dateOfBirthIncomplete
-    ) {
       const userData = {
         signupType: 'createEmail',
         mainHeader1: 'How you’ll sign in',
         subTitle: 'Create a Gmail address for signing in to your Google Account'
       }
       this.emitMainHeader.emit(userData);
-      console.log("signupForm", this.signupForm?.value)
+      console.log("signupForm", this.signupForm?.value);
     }
-  }
-
-  checkValues(): void {
-    this.dateOfBirthIncomplete = false;
-    const day = this.signupForm.get('dateOfBirthDay')?.value;
-    const month = this.signupForm.get('dateOfBirthMonth')?.value;
-    const year = this.signupForm.get('dateOfBirthYear')?.value;
-
-    if (!day || !month || !year || this.signupForm.get('dateOfBirthDay')?.hasError('pattern')
-    || this.signupForm.get('dateOfBirthYear')?.hasError('pattern')) {
-      this.dateOfBirthIncomplete = true;
-    }
-  }
-
-  checkGender(event: any) {
-    console.log("hey", event, 'form:',this.signupForm.get('gender')?.value)
-    // if(event.value === 'Costomised') {
-    //   this.customisedGender = true;
-    // }
   }
 }

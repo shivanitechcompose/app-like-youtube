@@ -7,7 +7,7 @@ import { map, Observable } from 'rxjs';
 })
 export class UserSignupSigninService {
 
-  private apiUrl = 'https://d329-182-70-122-144.ngrok-free.app';
+  private apiUrl = 'https://4272-182-70-122-144.ngrok-free.app';
 
   private secretKey = 'your-secret-key'; // Use a more secure key in production
 

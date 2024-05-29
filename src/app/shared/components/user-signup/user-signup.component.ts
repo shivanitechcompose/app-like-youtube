@@ -63,12 +63,13 @@ export class UserSignupComponent implements OnInit {
         updateOn: 'blur'
       }],
       gender: ['', [Validators.required]],
-      password: ['', [Validators.required, Validators.minLength(8), Validators.pattern('(?=.*[a-z])(?=.*[0-9])(?=.*[$@$!%*?#&])[a-z0-9\d$@$!%*?&].{8,}')]],
+      password: ['', [Validators.required, Validators.minLength(8), Validators.pattern('(?=.*[a-z])(?=.*[0-9])(?=.*[$@$!%*?&])[a-z0-9$@$!%*?&]{8,}')]],
       confirmPassword: ['', [Validators.required]],
       dateOfBirthDay: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
       dateOfBirthMonth: ['', [Validators.required]],
       dateOfBirthYear: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
-    });
+      dateOfBirth: ['']
+    }, { validators: this.dateOfBirthValidator });
   }
 
   getData(event: any) {
@@ -76,5 +77,32 @@ export class UserSignupComponent implements OnInit {
     this.mainHeader2 = event?.mainHeader2;
     this.subTitle = event?.subTitle;
     this.signupType = event?.signupType;
+  }
+
+  dateOfBirthValidator(formGroup: FormGroup) {
+    const day = formGroup.get('dateOfBirthDay')?.value;
+    const month = formGroup.get('dateOfBirthMonth')?.value;
+    const year = formGroup.get('dateOfBirthYear')?.value;
+
+    if (day && month !== null && year) {
+      const date = new Date(year, month, day);
+      const today = new Date();
+      if (date > today) {
+        return { dateOfBirthFuture: true };
+      }
+      if (month == 1 && day > 28) { // February
+        if (!((year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0)) && day > 28) {
+          return { invalidDate: true }; // Not a leap year
+        }
+        if (day > 29) {
+          return { invalidDate: true };
+        }
+      }
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      if (day > daysInMonth) {
+        return { invalidDate: true };
+      }
+    }
+    return null;
   }
 }

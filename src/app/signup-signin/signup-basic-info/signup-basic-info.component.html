@@ -1,56 +1,44 @@
-<div class="form-flex" *ngIf=signupForm>
+<div class="form-flex" *ngIf="signupForm">
   <form [formGroup]="signupForm" class="signup-form">
     <div class="brd-dropdown">
-      <mat-form-field class="form-brd-width" maxlength="2">
+      <mat-form-field class="form-brd-width">
         <mat-label>Day</mat-label>
-        <input matInput formControlName="dateOfBirthDay" maxlength="2" pattern="\d{2}" (keyup)="checkValues()" autocomplete="off">
+        <input matInput formControlName="dateOfBirthDay" maxlength="2" autocomplete="off">
+        <mat-error *ngIf="signupForm.get('dateOfBirthDay')?.hasError('required')">Day is required</mat-error>
+        <mat-error *ngIf="signupForm.get('dateOfBirthDay')?.hasError('pattern')">Invalid day</mat-error>
       </mat-form-field>
       <mat-form-field class="form-brd-width">
         <mat-label>Month</mat-label>
-        <mat-select formControlName="dateOfBirthMonth" (selectionChange)="checkValues()">
-          @for (month of months; track month) {
-            <mat-option [value]="month">{{month}}</mat-option>
-          }
+        <mat-select formControlName="dateOfBirthMonth">
+          <mat-option *ngFor="let month of months" [value]="month.value">
+            {{ month.viewValue }}
+          </mat-option>
         </mat-select>
+        <mat-error *ngIf="signupForm.get('dateOfBirthMonth')?.hasError('required')">Month is required</mat-error>
       </mat-form-field>
-      <mat-form-field class="form-brd-width" maxlength="4" minlength="4">
+      <mat-form-field class="form-brd-width">
         <mat-label>Year</mat-label>
-        <input matInput maxlength="4" pattern="\d{4}" formControlName="dateOfBirthYear" (keyup)="checkValues()" autocomplete="off">
+        <input matInput maxlength="4" minlength="4" formControlName="dateOfBirthYear" autocomplete="off">
+        <mat-error *ngIf="signupForm.get('dateOfBirthYear')?.hasError('required')">Year is required</mat-error>
+        <mat-error *ngIf="signupForm.get('dateOfBirthYear')?.hasError('minlength')">Invalid year</mat-error>
+        <mat-error *ngIf="signupForm.get('dateOfBirthYear')?.hasError('pattern')">Invalid year</mat-error>
       </mat-form-field>
     </div>
-    <mat-error *ngIf="dateOfBirthIncomplete">Please fill in a correct date of birth</mat-error>
+    <mat-error *ngIf="signupForm.hasError('invalidDate')">Invalid date</mat-error>
+    <mat-error *ngIf="signupForm.hasError('dateOfBirthFuture')">Date cannot be in the future</mat-error>
     <div>
       <mat-form-field class="form-full-width">
         <mat-label>Gender</mat-label>
         <mat-select formControlName="gender">
-          @for (gender of availableGender; track gender) {
-            <mat-option [value]="gender">{{gender}}</mat-option>
-          }
+          <mat-option *ngFor="let gender of availableGender" [value]="gender">
+            {{ gender }}
+          </mat-option>
         </mat-select>
         <mat-error *ngIf="signupForm.get('gender')?.hasError('required')">
           please select your gender
         </mat-error>
       </mat-form-field>
     </div>
-    <!-- <div *ngIf="customisedGender">
-      <mat-form-field class="form-full-width">
-        <mat-label>What's your gender?</mat-label>
-        <input matInput formControlName="firstName" (keyup)="checkValues()" autocomplete="off">
-      </mat-form-field>
-      <div>
-        <mat-form-field class="form-full-width">
-          <mat-label>Please refer to me as</mat-label>
-          <mat-select formControlName="referGender">
-            @for (referGen of referGender; track referGen) {
-              <mat-option [value]="referGen">{{referGen}}</mat-option>
-            }
-          </mat-select>
-          <mat-error *ngIf="signupForm.get('gender')?.hasError('required')">
-            please select your gender
-          </mat-error>
-        </mat-form-field>
-      </div>
-    </div> -->
     <div>
       <a href="https://support.google.com/accounts/answer/1733224?hl=en-GB" target="_blank">Why we ask for birthday and gender?</a>
     </div>

@@ -80,26 +80,10 @@ export class SignupPasswordComponent {
     }
 
     if(!this.passwordIsRequired && !this.confirmPasswordRequired && !this.passwordIncomplete && !this.passwordPatternWrong && !this.passwordNotMatched) {
-      const monthNames = [
-        "January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"
-      ];
+      this.signupForm.value.email = this.signupForm.value.email?.includes('@gmail.com') ? this.signupForm.value.email : this.signupForm.value.email + '@gmail.com';
 
-      const monthIndex = monthNames.findIndex(
-        month => month.toLowerCase() === this.signupForm?.get('dateOfBirthMonth')?.value?.toLowerCase()
-      );
-      const month = monthIndex + 1;
-      const brdMonth = month < 10 ? '0' + month : month;
-      const birthDate = this.signupForm.get('dateOfBirthYear')?.value + '-' + brdMonth + '-' + this.signupForm.get('dateOfBirthDay')?.value;
-      this.signupForm.value.email = this.signupForm.value.email?.includes("@gmail.com") ? this.signupForm.value.email : this.signupForm.value.email + '@gmail.com'; 
-
-      const validSignupForm = {
-        ...this.signupForm.value,
-        dateOfBirth: birthDate.toString()
-      };
-
-      if (validSignupForm) {
-        this.userSignupSigninService.register(validSignupForm).subscribe(
+      if (this.signupForm.valid) {
+        this.userSignupSigninService.register(this.signupForm.value).subscribe(
           response => {
             console.log('User registered successfully:', response);
           },
