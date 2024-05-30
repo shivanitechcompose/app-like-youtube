@@ -9,8 +9,6 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { UserSigninComponent } from '../../shared/components/user-signin/user-signin.component';
 import { UserSignupSigninService } from '../../shared/services/user-signup-signin.service';
-import * as CryptoJS from 'crypto-js';
-
 @Component({
   selector: 'app-signin-password',
   standalone: true,
@@ -37,7 +35,7 @@ export class SigninPasswordComponent {
   passwordNotMatched: boolean = false;
   passwordPatternWrong: boolean = false;
   
-  constructor(private fb: FormBuilder, private userSignupSigninService: UserSignupSigninService) {}
+  constructor(private fb: FormBuilder, private userSignupSigninService: UserSignupSigninService, private router: Router) {}
 
   ngOnInit(): void {
     console.log("signinForm", this.signinForm?.value)
@@ -58,43 +56,15 @@ export class SigninPasswordComponent {
     if(!this.passwordIsRequired) {
       this.userSignupSigninService.login(this.signinForm.value).subscribe(
         response => {
-          const refreshToken = response.headers.get('refresh-token');
-          const accessToken = response.headers.get('authorization');
-          if (refreshToken && accessToken) {
-            this.storeToken(refreshToken, accessToken);
-          }
+          console.log('user:', response.headers)
+          localStorage.setItem('isLoggedIn', 'true');
+          this.router.navigate(['']);
         },
         error => {
           console.error('Registration error:', error);
         }
       );
     }
-  }
-
-  private storeToken(refreshToken: string, accessToken: string): void {
-    const encryptedRefreshToken = CryptoJS.AES.encrypt(refreshToken, this.refreshTokeSecretKey).toString();
-    localStorage.setItem('refreshToken', encryptedRefreshToken);
-
-    const encryptedAccessToken = CryptoJS.AES.encrypt(accessToken, this.accessTokeSecretKey).toString();
-    localStorage.setItem('accessToken', encryptedAccessToken);
-  }
-
-  getStoredRefreshToken(): string | null {
-    const encryptedRefreshToken = localStorage.getItem('refreshToken');
-    if (encryptedRefreshToken) {
-      const bytes = CryptoJS.AES.decrypt(encryptedRefreshToken, this.refreshTokeSecretKey);
-      return bytes.toString(CryptoJS.enc.Utf8);
-    }
-    return null;
-  }
-
-  getStoredAccessToken(): string | null {
-    const encryptedAccessToken = localStorage.getItem('accessToken');
-    if (encryptedAccessToken) {
-      const bytes = CryptoJS.AES.decrypt(encryptedAccessToken, this.accessTokeSecretKey);
-      return bytes.toString(CryptoJS.enc.Utf8);
-    }
-    return null;
   }
 
   checkValues() {
@@ -104,6 +74,5 @@ export class SigninPasswordComponent {
     if(!password) {
       this.passwordIsRequired = true;
     }
-
   }
 }

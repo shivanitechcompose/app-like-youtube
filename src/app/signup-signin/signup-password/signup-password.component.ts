@@ -29,6 +29,8 @@ export class SignupPasswordComponent {
 
   @Input() public signupForm : FormGroup = this.fb.group({})
   hide = true;
+  refreshTokeSecretKey = 'localstorage-refresh-token-key';
+  accessTokeSecretKey = 'localstorage-access-token-key';
 
   @Output() public emitMainHeader: EventEmitter<Object> = new EventEmitter();
   passwordIsRequired: boolean = false;
@@ -86,6 +88,8 @@ export class SignupPasswordComponent {
         this.userSignupSigninService.register(this.signupForm.value).subscribe(
           response => {
             console.log('User registered successfully:', response);
+            localStorage.setItem('isLoggedIn', 'true');
+            this.router.navigate(['']);
           },
           error => {
             console.error('Registration error:', error);

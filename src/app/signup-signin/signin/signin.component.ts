@@ -26,8 +26,6 @@ export class SigninComponent {
   @Input() public signinForm : FormGroup = this.fb.group({})
   @Output() public emitSigninMainHeader: EventEmitter<Object> = new EventEmitter();
 
-  accountNotFound: boolean = false;
-
   constructor(private fb: FormBuilder, private router: Router, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {}

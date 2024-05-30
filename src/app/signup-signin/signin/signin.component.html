@@ -1,11 +1,8 @@
 <div class="form-flex" *ngIf=signinForm>
   <form [formGroup]="signinForm" class="signin-form">
     <mat-form-field class="form-full-width right-placeholder">
-      <mat-label>Email {{accountNotFound}}</mat-label>
+      <mat-label>Email</mat-label>
       <input matInput formControlName="email" autocomplete="off">
-      <mat-error *ngIf="accountNotFound">
-        Couldn't find your Google Account
-      </mat-error>
       <mat-error *ngIf="signinForm.get('email')?.hasError('required')">
         Enter an email address
       </mat-error>
