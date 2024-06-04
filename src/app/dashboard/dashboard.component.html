@@ -1,18 +1,26 @@
-<!-- <div>
-  <img src="./../assets/youtubeIcon/youtubeIcon.png" class="youtube-icon" alt="image">
-  <img src="../../assets/youtubeIcon/youtubeText.png" class="youtubeText-icon" alt="image">
+<div>
   <div class="button-next">
-    <button mat-flat-button color="primary" type="submit" class="btn-radius" (click)="goToSignin()">Sign in</button>
+    <button mat-flat-button color="primary" type="submit" class="btn-radius" (click)="goToSignin()">{{signinBtn}}</button>
   </div>
-</div> -->
+</div>
 
-<div class="ui four column grid">
-  <div class="ten wide column centered">
-    <div class="ui fluid action input">
-      <input
-        #input
-        type="text"
-        placeholder="Search for a video...">
+<div class="ui centered grid" style="margin-top: 3rem;">
+  <div class="fourteen wide column">
+    <h1 class="ui centered aligned header">
+      <span style="vertical-align: middle;">Youtube Search </span>
+      <img src="/assets/youtubeIcon/youtubeIcon.png" alt="">
+    </h1>
+    <div class="ui four column grid">
+      <div class="ten wide column centered">
+        <div class="ui fluid action input">
+          <input
+            #input
+            type="text"
+            class="border-class"
+            placeholder="Search for a video...">
+        </div>
+      </div>
     </div>
   </div>
 </div>
+

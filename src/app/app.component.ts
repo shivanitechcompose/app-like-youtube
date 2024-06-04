@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { SearchContainerComponent } from './search-container/search-container.component';
 
@@ -10,6 +10,11 @@ import { SearchContainerComponent } from './search-container/search-container.co
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   title = 'app-like-youtube';
+  public ifSignin: boolean = false;
+
+  ngOnInit() {
+    this.ifSignin = localStorage.getItem('signinClicked') === 'true';
+  }
 }
