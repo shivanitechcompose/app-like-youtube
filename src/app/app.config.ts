@@ -9,8 +9,9 @@ import { getHeadersInterceptor } from './interceptor/get-headers.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes),
-    provideHttpClient(withInterceptors(
-      [setHeadersInterceptor, getHeadersInterceptor]
-    )),
+    provideHttpClient(),
+    // provideHttpClient(withInterceptors(
+    //   [setHeadersInterceptor, getHeadersInterceptor]
+    // )),
     provideAnimationsAsync()]
 };
