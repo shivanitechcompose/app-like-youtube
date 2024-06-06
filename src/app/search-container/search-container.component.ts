@@ -49,6 +49,7 @@ export class SearchContainerComponent implements OnInit {
   handleSearch(inputValue: string) {
     this.loading = true;
     if(inputValue !== '') {
+    localStorage.setItem('isSearching', 'true');
     this.youtubeService.getVideosFromSearchResult(inputValue)
       .subscribe((data: any) => {
         console.log('data:', data)
@@ -70,6 +71,7 @@ export class SearchContainerComponent implements OnInit {
         this.loading = false;
       });
     } else {
+      localStorage.setItem('isSearching', 'false');
       this.getMostPopuplarVideos();
     }
   }

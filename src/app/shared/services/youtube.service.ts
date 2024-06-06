@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 
@@ -28,5 +28,18 @@ export class YoutubeService {
       .pipe(
         map((response: any) => response.items)
       );
+  }
+
+  searchShorts(query: string): Observable<any> {
+    const params = {
+      key: this.apiKey,
+      q: query,
+      part: 'snippet',
+      type: 'video',
+      maxResults: '10',
+      videoDuration: 'short', // This ensures the video is less than 60 seconds
+    };
+
+    return this.http.get(`${this.apiUrl}/search`, { params });
   }
 }

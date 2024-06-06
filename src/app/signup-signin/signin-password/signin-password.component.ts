@@ -30,10 +30,7 @@ export class SigninPasswordComponent {
 
   @Output() public emitSigninMainHeader: EventEmitter<Object> = new EventEmitter();
   passwordIsRequired: boolean = false;
-  passwordIncomplete: boolean = false;
-  confirmPasswordRequired: boolean = false;
-  passwordNotMatched: boolean = false;
-  passwordPatternWrong: boolean = false;
+  wrongPassword: boolean = false;
   
   constructor(private fb: FormBuilder, private userSignupSigninService: UserSignupSigninService, private router: Router) {}
 
@@ -61,6 +58,7 @@ export class SigninPasswordComponent {
           this.router.navigate(['']);
         },
         error => {
+          this.wrongPassword = true;
           console.error('Registration error:', error);
         }
       );

@@ -2,3 +2,29 @@
   margin-left: 15rem;
   margin-right: 15rem
 }
+
+.card-container {
+  display: flex;
+  justify-content: center;
+  padding-top: 30px;
+}
+
+mat-card {
+  width: 540px;
+  box-shadow: black;
+  min-height: 100px;
+  padding-top: 15px;
+  border-radius: 10px;
+}
+
+.card-title {
+  text-align: center;
+  align-items: center;
+  font-weight: 500;
+  font-size: large;
+}
+
+.card-description {
+  padding-top: 20px;
+  text-align: center;
+}

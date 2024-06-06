@@ -1,1 +1,41 @@
-<router-outlet *ngIf="ifSignin"></router-outlet>
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #sidenav mode="side" [(opened)]="opened" (opened)="events.push('open!')"
+              (closed)="events.push('close!')" class="sidenave">
+              <button mat-button (click)="sidenav.toggle()">
+                <div class="sidenav-icons-container">
+                  <img src="/assets/youtubeIcon/sidenaveIcon.png" class="sidenav-icon" alt="">
+                  <h3 class="ui centered aligned header margin">
+                    <img src="/assets/youtubeIcon/youtubeIcon.png" alt="">
+                    <span style="vertical-align: middle;">Youtube</span>
+                  </h3>
+                </div>
+              </button>
+              <div>
+                <button mat-button (click)="openHistory()">
+                  Histroy
+                </button>  
+              </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="sidenave-content">
+    <p>
+      <button mat-button (click)="sidenav.toggle()">
+        <h3 class="ui centered aligned header">
+          <img src="/assets/youtubeIcon/youtubeIcon.png" alt="">
+          <span style="vertical-align: middle;">Youtube</span>
+        </h3>
+      </button>
+    </p>
+    <!-- <router-outlet *ngIf="ifSignin"></router-outlet> -->
+    <div *ngIf="shorts.length > 0">
+      <div *ngFor="let short of shorts">
+        <h3>{{ short.snippet.title }}</h3>
+        <img [src]="short.snippet.thumbnails.default.url" alt="{{ short.snippet.title }}" />
+      </div>
+    </div>
+    <div *ngIf="shorts.length === 0">
+      <p>No Shorts found.</p>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+<!-- <router-outlet *ngIf="ifSignin"></router-outlet> -->

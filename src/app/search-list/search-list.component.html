@@ -1,4 +1,4 @@
-<div class="ui four column grid">
+<div *ngIf="isLoggedIn && !isSearching || isLoggedIn && isSearching || !isLoggedIn && isSearching; else emptyCard" class="ui four column grid">
   <div class="column" *ngFor="let video of videos">
     <div class="ui card">
       <div class="image">
@@ -25,3 +25,11 @@
     </div>
   </div>
 </div>
+<ng-template #emptyCard>
+  <div class="card-container">
+    <mat-card>
+      <mat-card-content class="card-title ">Try searching to get started</mat-card-content>
+      <mat-card-content class="card-description">Start watching videos to help us build a feed of videos that you'll love.</mat-card-content>
+    </mat-card>
+  </div>
+</ng-template>
