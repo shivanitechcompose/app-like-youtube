@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { fromEvent } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map, pluck } from 'rxjs/operators';
@@ -18,16 +18,21 @@ export class DashboardComponent implements AfterViewInit {
   @Output() search: EventEmitter<string> = new EventEmitter<string>();
   isLoggedIn: boolean = false;
   signinBtn: string = 'Sign in';
+  userId: string | null = '';
 
-  constructor(private router: Router, private userSignupSigninService: UserSignupSigninService) {}
+  constructor(private router: Router, private userSignupSigninService: UserSignupSigninService, private cd: ChangeDetectorRef) {}
 
   ngOnInit() {
     if (localStorage.getItem('isLoggedIn') === 'true') {
-      const userId: string | null = localStorage.getItem('uid');
-      if (userId) {
-        this.userSignupSigninService.getUserDetails(userId).subscribe((response) => {
+      this.isLoggedIn = true;
+
+      this.cd.detectChanges();
+      const userEmailId = localStorage.getItem('uid');
+      if (userEmailId) {
+        this.userSignupSigninService.getUserDetails(userEmailId).subscribe((response) => {
           console.log('response:', response);
           this.signinBtn = response?.data?.email?.split(' ').map((n: any) => n[0]).join('').toUpperCase();
+          this.userId = response?.data?._id;
         }, error => {
           console.error('Error fetching user details:', error);
         });
@@ -57,6 +62,19 @@ export class DashboardComponent implements AfterViewInit {
     localStorage.setItem('signinClicked', 'true');
     if(localStorage.getItem('isLoggedIn') !== 'true') {
       this.router.navigate(['/user-signin']);
+    }
+  }
+
+  signout() {
+    if (this.userId) {
+      this.userSignupSigninService.signout(this.userId).subscribe((response) => {
+        console.log('response:', response);
+        localStorage.setItem('isLoggedIn','false');
+      }, error => {
+        console.error('Error fetching user details:', error);
+      });
+    } else {
+      console.error('User ID not found in local storage');
     }
   }
 }

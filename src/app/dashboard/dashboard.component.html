@@ -1,6 +1,7 @@
 <div>
   <div class="button-next">
     <button mat-flat-button color="primary" type="submit" class="btn-radius" (click)="goToSignin()">{{signinBtn}}</button>
+    <button mat-flat-button color="primary" type="submit" *ngIf="isLoggedIn" class="btn-radius" (click)="signout()">Signout</button>
   </div>
 </div>
 

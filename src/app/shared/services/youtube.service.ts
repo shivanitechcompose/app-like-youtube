@@ -21,8 +21,8 @@ export class YoutubeService {
       );
   }
 
-  getVideos(): Observable <any> {
-    const url = `${this.apiUrl}/videos?part=snippet&chart=mostPopular&maxResults=24&key=${this.apiKey}`;
+  getVideos(regionCode: string, language: string): Observable <any> {
+    const url = `${this.apiUrl}/videos?part=snippet&chart=mostPopular&regionCode=${regionCode}&relevanceLanguage=${language}&maxResults=24&key=${this.apiKey}`;
     console.log('in videos')
     return this.http.get(url)
       .pipe(
@@ -41,5 +41,10 @@ export class YoutubeService {
     };
 
     return this.http.get(`${this.apiUrl}/search`, { params });
+  }
+
+  getLanguages(): Observable<any> {
+    const url = `${this.apiUrl}/i18nLanguages?part=snippet&key=${this.apiKey}`;
+    return this.http.get(url);
   }
 }

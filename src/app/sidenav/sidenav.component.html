@@ -1,0 +1,8 @@
+<div>
+  <label for="language">Select Language:</label>
+  <select id="language" [(ngModel)]="selectedLanguage" (change)="changeLanguage($event)">
+    <option *ngFor="let language of languages" [value]="language.id">
+      {{ language.snippet.name }}
+    </option>
+  </select>
+</div>

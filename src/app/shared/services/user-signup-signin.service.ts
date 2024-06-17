@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class UserSignupSigninService {
 
-  private apiUrl = 'https://88db-2405-201-2019-f04f-94c9-dce4-9d0b-4938.ngrok-free.app';
+  private apiUrl = 'https://f27a-2405-201-2019-f006-14f0-e97e-3a8d-4a02.ngrok-free.app';
 
   constructor(private http: HttpClient) { }
 
@@ -32,5 +32,10 @@ export class UserSignupSigninService {
 
   public getUserDetails(userId: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/get_user_info?user_id=${userId}`);
+  }
+
+
+  public signout(userId: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/auth/sign_out?user_id=${userId}`);
   }
 }
