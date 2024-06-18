@@ -22,6 +22,7 @@ export class SidenavComponent implements OnInit {
   ngOnInit(): void {
     this.youtubeService.getLanguages().subscribe((response: any) => {
       console.log('response?.item?.length:', response?.items?.length)
+      // this.languages = response?.items;
       for(let i=0; i <= response?.items?.length; i++) {
         if(response?.items[i]?.snippet?.hl?.length > 2) {
           this.languages.push(response?.items[i]);

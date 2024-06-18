@@ -12,8 +12,8 @@ export class YoutubeService {
 
   constructor(private http: HttpClient) { }
 
-  getVideosFromSearchResult(query: string): Observable <any> {
-    const url = `${this.apiUrl}/search?q=${query}&key=${this.apiKey}&part=snippet&type=video&maxResults=12`;
+  getVideosFromSearchResult(query: string, regionCode: string, language: string): Observable <any> {
+    const url = `${this.apiUrl}/search?q=${query}&key=${this.apiKey}&part=snippet&type=video&regionCode=${regionCode}&relevanceLanguage=${language}&maxResults=12`;
     console.log('in search videos')
     return this.http.get(url)
       .pipe(

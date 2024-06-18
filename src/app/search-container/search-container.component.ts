@@ -64,7 +64,7 @@ export class SearchContainerComponent implements OnInit {
     this.loading = true;
     if(inputValue !== '') {
     localStorage.setItem('isSearching', 'true');
-    this.youtubeService.getVideosFromSearchResult(inputValue)
+    this.youtubeService.getVideosFromSearchResult(inputValue, this.regionCode ?  this.regionCode : 'US', this.lang ? this.lang : 'en')
       .subscribe((data: any) => {
         console.log('data:', data)
         this.videos = data.map((item: any) => {
