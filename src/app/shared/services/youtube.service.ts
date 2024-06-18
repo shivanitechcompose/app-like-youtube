@@ -30,7 +30,7 @@ export class YoutubeService {
       );
   }
 
-  searchShorts(query: string): Observable<any> {
+  searchShorts(query: string, regionCode: string, language: string): Observable<any> {
     const params = {
       key: this.apiKey,
       q: query,
@@ -40,7 +40,7 @@ export class YoutubeService {
       videoDuration: 'short', // This ensures the video is less than 60 seconds
     };
 
-    return this.http.get(`${this.apiUrl}/search`, { params });
+    return this.http.get(`${this.apiUrl}/search?regionCode=${regionCode}&relevanceLanguage=${language}`, { params });
   }
 
   getLanguages(): Observable<any> {

@@ -1,23 +1,37 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import { Router, RouterModule } from '@angular/router';
 import { YoutubeService } from '../shared/services/youtube.service';
+import { LanguageService } from '../shared/services/language.service';
 
 @Component({
   selector: 'app-sidenav',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, MatSidenavModule, MatListModule, RouterModule],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss'
 })
 export class SidenavComponent implements OnInit {
 
-  languages: any[] = [];
-  selectedLanguage: string = 'en-US';
+  languages = [
+    { id: 'en-US', snippet: { name: 'English' } },
+    { id: 'es-ES', snippet: { name: 'Spanish' } }
+  ];
+
+  selectedLanguage: string = this.languages[0].id;
+
+  events: string[] = [];
+  opened: boolean = false;
+
+  @ViewChild('sidenav') sidenav!: MatSidenav;
+
 
   @Output() languageChanged: EventEmitter<string> = new EventEmitter<string>();
 
-  constructor(private youtubeService: YoutubeService, private cd:ChangeDetectorRef) {}
+  constructor(private youtubeService: YoutubeService, private cd:ChangeDetectorRef, private router: Router, private languageService: LanguageService) {}
 
   ngOnInit(): void {
     this.youtubeService.getLanguages().subscribe((response: any) => {
@@ -32,10 +46,23 @@ export class SidenavComponent implements OnInit {
     });
   }
 
-  changeLanguage(language: any): void {
-    console.log('lang:', language)
-    this.selectedLanguage = language['target']['value'];
-    this.languageChanged.emit(this.selectedLanguage);
+
+  toggleSidenav() {
+    this.sidenav.toggle();
+  }
+
+  changeLanguage(event: any): void {
+    const selectedLang = event.target.value;
+    this.selectedLanguage = selectedLang;
+    this.languageService.setSelectedLanguage(selectedLang);
+  }
+
+  openShorts() {
+    this.router.navigate(['/shorts']);
+  }
+
+  getPageRefresh() {
+    this.router.navigate(['/search-landing']);
   }
 
 }

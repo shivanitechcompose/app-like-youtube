@@ -70,6 +70,7 @@ export class DashboardComponent implements AfterViewInit {
       this.userSignupSigninService.signout(this.userId).subscribe((response) => {
         console.log('response:', response);
         localStorage.setItem('isLoggedIn','false');
+        this.router.navigate(['/user-signin'])
       }, error => {
         console.error('Error fetching user details:', error);
       });

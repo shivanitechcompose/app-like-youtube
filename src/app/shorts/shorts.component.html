@@ -1,0 +1,15 @@
+<div *ngIf="loading" style="margin: 3rem;">
+  <div class="ui active centered inline loader"></div>
+</div>
+<div *ngIf="shorts.length > 0">
+  <div *ngFor="let short of shorts">
+    <h3>{{ short.snippet.title }}</h3>
+    <img
+      [src]="short.snippet.thumbnails.default.url"
+      alt="{{ short.snippet.title }}"
+      (click)="playShort(short.id.videoId)"
+    />
+  </div>
+</div>
+
+<div id="player-container"></div>
