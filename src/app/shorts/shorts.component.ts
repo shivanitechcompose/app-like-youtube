@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, SimpleChanges } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { LanguageService } from '../shared/services/language.service';
 import { YoutubePlayerService } from '../shared/services/youtube-player.service';
@@ -16,18 +16,28 @@ export class ShortsComponent {
 
   private subscription!: Subscription;
   loading: boolean = true;
+  selectedLanguage: string = '';
   constructor(private youtubeService: YoutubeService, private youtubePlayerService: YoutubePlayerService, private languageService:LanguageService) {}
 
   shorts: any[] = [];
 
   ngOnInit() {
-    let selectedLanguage = '';
     this.subscription = this.languageService.selectedLanguage$.subscribe(language => {
-      selectedLanguage = language;
+      this.selectedLanguage = language;
+      this.getShortsInLanguage();
     });
+  }
 
-    const lang = selectedLanguage.split('-')?.[0];
-    const regionCode = selectedLanguage.split('-')?.[1];
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['language'] && !changes['language'].firstChange) {
+      this.getShortsInLanguage();
+    }
+  }
+
+
+  getShortsInLanguage() {
+    const lang = this.selectedLanguage.split('-')?.[0];
+    const regionCode = this.selectedLanguage.split('-')?.[1];
 
     const query = 'shorts'; // You can modify this to search for specific shorts
     this.youtubeService.searchShorts(query, regionCode, lang).subscribe(
