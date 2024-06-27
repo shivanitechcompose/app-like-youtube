@@ -21,6 +21,7 @@ export class SidenavComponent implements OnInit {
     { id: 'es-ES', snippet: { name: 'Spanish' } }
   ];
 
+  isLoggedIn: boolean = false;
   selectedLanguage: string = this.languages[0].id;
 
   events: string[] = [];
@@ -34,6 +35,7 @@ export class SidenavComponent implements OnInit {
   constructor(private youtubeService: YoutubeService, private cd:ChangeDetectorRef, private router: Router, private languageService: LanguageService) {}
 
   ngOnInit(): void {
+    this.isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
     this.youtubeService.getLanguages().subscribe((response: any) => {
       console.log('response?.item?.length:', response?.items?.length)
       // this.languages = response?.items;
@@ -62,7 +64,10 @@ export class SidenavComponent implements OnInit {
   }
 
   getPageRefresh() {
-    this.router.navigate(['/search-landing']);
+    if(window.location.href?.includes('search-landing')) {
+      window.location.reload();
+    } else {
+      this.router.navigate(['/search-landing']);
+    }
   }
-
 }

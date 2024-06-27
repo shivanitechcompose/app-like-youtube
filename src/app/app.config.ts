@@ -6,11 +6,12 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { setHeadersInterceptor } from './interceptor/set-headers.interceptor';
 import { getHeadersInterceptor } from './interceptor/get-headers.interceptor';
+import { tokenInterceptor } from './interceptor/token.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes),
     provideHttpClient(withInterceptors(
-      [setHeadersInterceptor, getHeadersInterceptor]
+      [setHeadersInterceptor, getHeadersInterceptor, tokenInterceptor]
     )),
     provideAnimationsAsync()]
 };

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { Subscription } from 'rxjs';
 import { DashboardComponent } from '../dashboard/dashboard.component';
 import { SearchListComponent } from '../search-list/search-list.component';
@@ -13,7 +14,7 @@ import { SidenavComponent } from '../sidenav/sidenav.component';
 @Component({
   selector: 'app-search-container',
   standalone: true,
-  imports: [CommonModule, SearchListComponent, DashboardComponent, HttpClientModule, SidenavComponent, ShortsComponent],
+  imports: [CommonModule, SearchListComponent, DashboardComponent, HttpClientModule, SidenavComponent, ShortsComponent, MatSidenavModule],
   templateUrl: './search-container.component.html',
   styleUrl: './search-container.component.scss'
 })
@@ -25,12 +26,14 @@ export class SearchContainerComponent implements OnInit, OnChanges, OnDestroy {
   videos: any[] = [];
   lang!: string;
   regionCode!: string;
+  isLoggedIn: boolean = false;
 
   private subscription!: Subscription;
 
   constructor(private youtubeService: YoutubeService, private languageService: LanguageService) { }
 
   ngOnInit() {
+    this.isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
     this.subscription = this.languageService.selectedLanguage$.subscribe(language => {
       this.language = language;
       this.getMostPopuplarVideos();

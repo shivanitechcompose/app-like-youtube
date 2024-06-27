@@ -13,16 +13,16 @@
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content class="sidenav-content">
-    <button mat-button (click)="toggleSidenav()">
+    <button *ngIf="isLoggedIn" mat-button (click)="toggleSidenav()">
       <div class="sidenav-icons-container">
       <img src="/assets/youtubeIcon/sidenaveIcon.png" class="sidenav-icon" alt="">
       </div>
     </button>
-      <button mat-button (click)="getPageRefresh()">
-        <h3 class="ui centered aligned header margin">
-          <span style="vertical-align: middle;">Youtube</span>
-        </h3>
-      </button>
+    <button *ngIf="isLoggedIn" mat-button (click)="getPageRefresh()">
+      <h3 class="ui centered aligned header margin">
+        <span style="vertical-align: middle;">Youtube</span>
+      </h3>
+    </button>
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
